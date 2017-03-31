@@ -1,0 +1,31 @@
+{
+  "pages":[
+    "pages/payment/payment",
+    "pages/me/me",
+    "pages/index/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "FG",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/payment/payment",
+      "text": "缴费",
+      "iconPath":"image/icon_payment.png",
+      "selectedIconPath":"image/icon_payment.png"
+    }, {
+      "pagePath":"pages/index/index",
+      "text":"index",
+      "iconPath":"image/icon_payment.png",
+      "selectedIconPath":"image/icon_payment.png"
+    },{
+      "pagePath": "pages/me/me",
+      "text": "我的",
+      "iconPath":"image/icon_payment.png",
+      "selectedIconPath":"image/icon_payment.png"
+    }]
+  }
+}

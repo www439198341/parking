@@ -1,0 +1,15 @@
+<!--pages/payment/payment.wxml-->
+<view class="container">
+
+    <!--停车费用信息-->
+    <view class="parkInfo">
+        <view class="carNumber info">{{carNumber}}</view>
+        <view class="parkTime info">{{parkTime}}</view>
+        <view class="parkLocation info">{{parkLocation}}</view>
+        <view class="fee info">{{fee}}元</view>
+    </view>
+
+    <!--缴费按钮-->
+    <view class="pay">确认缴费</view>
+
+</view>
