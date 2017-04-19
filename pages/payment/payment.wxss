@@ -1,38 +1,50 @@
 /* pages/payment/payment.wxss */
 
 .container{
-
+    width: 100%;
 }
 
 .parkInfo{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 4rpx solid plum;
+    border-radius: 50%;
+    width:500rpx;
+    height:500rpx;
     
 }
 
 .info{
+    width:50%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #abc;
-    margin:20px;
-    padding: 8px;
+    
+    margin:20rpx;
+    padding: 8rpx;
     border-radius: 5%;
-    border:2px solid #aaa;
+    
 }
 
 .carNumber{
-
+    margin-top: 70rpx;
+    background-color: #abc;
 }
 
 .parkTime{
+    color: plum;
 
 }
 
 .parkLocation{
-
+background-color: #abc;
+font-family: "中华新魏";
 }
 
 .fee{
-
+background-color: #abc;
+color: red;
 }
 
 .pay{
@@ -40,10 +52,13 @@
     flex-direction: column;
     align-items: center;
     background-color: green;
-    margin:20px;
-    padding: 8px;
+    margin:20rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    padding-bottom: 20rpx;
+    padding-top: 20rpx;
     border-radius: 5%;
-    border:2px solid #aaa;
+    margin-top: 200rpx;
 }
 
 

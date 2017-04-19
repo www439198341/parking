@@ -2,7 +2,7 @@
 <view class="container">
 
     <!--停车费用信息-->
-    <view class="parkInfo">
+    <view class="parkInfo" id="{{parkInfo}}" >
         <view class="carNumber info">{{carNumber}}</view>
         <view class="parkTime info">{{parkTime}}</view>
         <view class="parkLocation info">{{parkLocation}}</view>

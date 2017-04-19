@@ -8,7 +8,7 @@ Page({
     motto3: '停车券',
     motto4: '帮助',
     userInfo: {},
-    carNumber:'苏AW526Z'
+    carNumber:'苏A·W526Z'
   },
   //事件处理函数
   bindViewTap: function() {
