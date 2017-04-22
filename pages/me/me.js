@@ -26,5 +26,61 @@ Page({
         userInfo:userInfo
       })
     })
+  },
+  carNoMgr : function(){
+    wx.navigateTo({
+      url: '../carNoMgr/carNoMgr',
+      success: function(res){
+        // success
+      },
+      fail: function(res) {
+        // fail
+      },
+      complete: function(res) {
+        // complete
+      }
+    })
+  },
+  logs:function(){
+    wx.navigateTo({
+      url: '../logs/logs',
+      success: function(res){
+        // success
+      },
+      fail: function(res) {
+        // fail
+      },
+      complete: function(res) {
+        // complete
+      }
+    })
+  },
+  onsale:function(){
+    wx.navigateTo({
+      url: '../onsale/onsale',
+      success: function(res){
+        // success
+      },
+      fail: function(res) {
+        // fail
+      },
+      complete: function(res) {
+        // complete
+      }
+    })
+  },
+  help:function(){
+    wx.navigateTo({
+      url: '../help/help',
+      success: function(res){
+        // success
+      },
+      fail: function(res) {
+        // fail
+      },
+      complete: function(res) {
+        // complete
+      }
+    })
   }
 })

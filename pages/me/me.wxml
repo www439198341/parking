@@ -10,10 +10,10 @@
 
   <!-- 显示屏幕下方文字 -->
   <view class="userAction">
-    <view class="me-list">{{motto1}}</view>
-    <view class="me-list">{{motto2}}</view>
-    <view class="me-list">{{motto3}}</view>
-    <view class="me-list">{{motto4}}</view>
+    <view class="me-list" bindtap="carNoMgr">{{motto1}}</view>
+    <view class="me-list" bindtap="logs">{{motto2}}</view>
+    <view class="me-list" bindtap="onsale">{{motto3}}</view>
+    <view class="me-list" bindtap="help">{{motto4}}</view>
   </view>
 </view>
 

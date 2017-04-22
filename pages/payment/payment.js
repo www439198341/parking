@@ -3,13 +3,15 @@ var app = getApp();
 Page({
   data:{
      carNumber:'苏A·W526Z',
-     parkTime:'1:25:38',
-     parkLocation:'万达广场',
-     fee:'5.5',
+     parkTime:null,
+     parkLocation:null,
+     fee:null  ,
      circleWidth:0,
      circleHeight:0,
-     userInfo: {}
+     userInfo: {},
+     isParking:1
   },
+  
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
     console.log('onLoad')
@@ -21,20 +23,25 @@ Page({
         userInfo:userInfo
       })
     })
-
-wx.request({
-      url:'http://localhost:8080/TingChe/servlet/Park',
-      data:{
-        carNumber:'苏A·W526Z'
-      },
-      success: function(res) {
-        console.log(res.data)
-        that.setData({
-          parkTime:res.data
-        })
-      }
-    })
     
+    this.getParkInfo(that.data.carNumber,function(data){
+        console.log(data)
+
+        if(data.isParking == false){
+          that.setData({
+            isParking:2
+          })
+        }else{
+          that.setData({
+            carNumber:data.carNumber,
+            parkTime:data.parkTime,
+            parkLocation:data.parkLocation,
+            fee:data.fee,
+            isParking:3
+          })
+          
+        }
+    })
   },
   onReady:function(){
     // 页面渲染完成
@@ -48,6 +55,22 @@ wx.request({
   },
   onUnload:function(){
     // 页面关闭
+  },
+  getParkInfo : function(carNumber, cb){
+    // 获取停车信息的方法
+    wx.request({
+      url:'http://localhost:8080/TingChe/servlet/Park',
+      data:{
+        carNumber:carNumber
+      },
+      success: function(res) {
+        cb(res.data)
+      }
+    })
+  },
+  pay : function(){
+    // TODO 微信支付相关问题
+    console.log("wx.pay")
   }
 })
 
