@@ -8,3 +8,148 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+view,
+sroll-view,
+swiper,
+icon,
+text,
+progress,
+button,
+checkbox,
+form,
+input,
+label,
+input,
+picker,
+radio,
+slider,
+switch,
+action-sheet,
+modal,
+toast,
+loading,
+navigator,
+audio,
+image,
+video,
+map,
+canvas {
+  box-sizing: border-box;
+}
+
+.hide {
+  display: none!important;
+}
+
+.container,
+input,
+button {
+  font: 14px "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+}
+
+.container {
+  height: 100%;
+  background-color: #f5f5f5;
+}
+
+.panel {
+  background: #fff;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+.nodata{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.nodata_img{
+	display: block;
+	width: 45px;
+	height: 45px;
+}
+
+.nodata_text{
+	color:#dedede;
+	font-size: 12px;
+	padding-left: 10px;
+}
+
+/**app.wxss**/
+page{
+    height: 100%;
+    background-color: #f0eff5;
+    font-size: 15px;
+}
+
+.item-ls{
+    position: relative;
+}
+
+.component-item-list{
+    width: 100%;
+    position: relative;
+    height: 164rpx;
+}
+
+.component-item-list-right{
+    position: absolute;
+    right: 0;
+    color: white;
+    font-size: 13px;
+    text-align: center;
+    width: 170rpx;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    flex-direction:column;
+    height: 161rpx;
+    z-index: 9;
+}
+
+.component-item-list-left{
+    width: 100%;
+    font-size: 13px;
+    color: #8d8d8d;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #f3f3f3;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    height: 159rpx;
+    background: #fff;
+}
+
+.component-item-list-top{
+    width: 25%;
+}
+
+.component-item-list-top image{
+    width: 130rpx;
+    height: 130rpx;
+}
+
+.component-item-list-main{
+    width: 45%;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.main-name{
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+    padding-bottom: 10rpx;
+}
+
+.main-price{
+    padding-bottom: 6rpx;
+}
+
+.component-item-list-foot{
+
+    color: blue;
+}

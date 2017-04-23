@@ -1,0 +1,31 @@
+<view class="container timer {{completed ? 'timer--runing': ''}}">
+	<view class="timer_main">
+		 <view class="timer_time-wrap">
+		 		<view class="timer_progress_mask"></view>
+		 		<view class="timer_progress timer_left">
+		 			<view class="timer_circle timer_circle--left" style="transform: rotate({{leftDeg}}deg);"></view>
+		 		</view>
+		 		<view class="timer_progress timer_right">
+		 			<view class="timer_circle timer_circle--right" style="transform: rotate({{rightDeg}}deg);"></view>
+		 		</view>
+			 	<text wx:if="{{!completed}}" class="timer_time">{{remainTimeText}}</text>
+			 	
+		 		<image 
+		 			wx:if="{{completed}}" 
+		 			class="timer_done" 
+		 			src="../../image/timeout.png"></image>
+		 </view>
+		
+	</view>
+	
+
+
+
+	<view class="timer_footer">
+
+	<view class="timer_ctrl {{completed ? 'hide' : ''}}">请在倒计时结束前离场，否则将产生额外费用</view>
+	<view class="timer_ctrl {{completed ? '' : 'hide'}}">您已超时，请在离场时补缴费用</view>
+
+	</view>
+</view>
+

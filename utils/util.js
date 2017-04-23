@@ -1,3 +1,11 @@
+
+
+function formatTime(time, format) {
+  let temp = '0000000000' + time
+  let len = format.length
+  return temp.substr(-len)
+}
+
 function formatTime(date) {
   var year = date.getFullYear()
   var month = date.getMonth() + 1

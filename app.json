@@ -1,14 +1,15 @@
 {
   "pages":[
-    "pages/me/me",
-    "pages/payment/payment",
-    
-    "pages/index/index",
     "pages/carNoMgr/carNoMgr",
+    "pages/payment/payment",
+    "pages/countdown/countdown",
+    "pages/me/me",
+    "pages/index/index",
+    
     "pages/logs/logs",
     "pages/onsale/onsale",
     "pages/help/help"
-
+    
   ],
   "window":{
     "backgroundTextStyle":"light",

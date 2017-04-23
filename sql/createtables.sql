@@ -21,8 +21,13 @@ parkloc varchar(50)
 );
 
 create table userinfo(
-account varchar(50),
+openid varchar(50),
+city varchar(20),
+country varchar(10),
+gender char(1),
+language varchar(10),
 nickname varchar(50),
+province varchar(10),
 carnumber1 varchar(10),
 carnumber2 varchar(10),
 carnumber3 varchar(10),

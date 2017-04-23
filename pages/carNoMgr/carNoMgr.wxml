@@ -1,2 +1,32 @@
 <!--pages/carNoMgr/carNoMgr.wxml-->
-<text>pages/carNoMgr/carNoMgr.wxml</text>
+<view class="item-page">
+
+    <view class="address-item" wx:for="{{addressList}}" bindtap="selUseAddress" >
+        <view class="address-item-top" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" style="{{item.txtStyle}}"  data-index="{{index}}" >
+            <view class="item-page-left">
+                <text>{{index+1}}</text>
+            </view>
+
+            <view class="item-page-middle">
+                <text class="rr {{isEdit == true ? 'hide' : ''}}">{{item.Address}}</text>
+                <input class="rr {{isEdit == true ? '' : 'hide'}}" type="text" value="{{item.Address}}" bindblur="editConfirm" />
+            </view>
+
+            <view class="item-page-right" bindtap="editAddress" data-index="{{index}}">
+                <image class="{{isEdit == true ? 'hide' : ''}}" src="../../image/editAddress.png"></image>
+                <image class="{{isEdit == true ? '' : 'hide'}}" src="../../image/check.png"></image>
+            </view>
+        </view>
+
+        <view bindtap="delItem" class="posit">
+            <view class="editor" data-addressid="{{item.address.ID}}" catchtap="setDefaultAddress">设为默认</view>
+            <view class="del" data-addressid="{{item.address.ID}}" bindtap="delItem" data-index="{{index}}" catchtap="delAddress">删除</view>
+        </view>
+    </view>
+
+
+    <view class="add-address" bindtap="addAddress">
+        <text>添加新车辆</text>
+    </view>
+
+</view>

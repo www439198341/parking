@@ -1,1 +1,6 @@
-{}
+{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#4a86e8",
+    "navigationBarTitleText": "左滑删除",
+    "navigationBarTextStyle":"#fff"
+}

@@ -14,7 +14,14 @@ Page({
   
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
-    console.log('onLoad')
+    
+  },
+  onReady:function(){
+    // 页面渲染完成
+    
+  },
+  onShow:function(){
+    // 页面显示
     var that = this
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){
@@ -22,10 +29,37 @@ Page({
       that.setData({
         userInfo:userInfo
       })
+      console.log(userInfo)
+      console.log(app.globalData.openid)
+      wx.request({
+        url: 'http://localhost:8080/TingChe/servlet/Login',
+        data: {
+          openid:app.globalData.openid,
+          city:userInfo.city,
+          country:userInfo.country,
+          gender : userInfo.gender,
+          language :userInfo.language,
+          nickname : userInfo.nickname,
+          province : userInfo.province
+        },
+        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+        // header: {}, // 设置请求的 header
+        success: function(res){
+          // success
+        },
+        fail: function(res) {
+          // fail
+        },
+        complete: function(res) {
+          // complete
+        }
+      })
+
     })
+
     
     this.getParkInfo(that.data.carNumber,function(data){
-        console.log(data)
+        //console.log(data)
 
         if(data.isParking == false){
           that.setData({
@@ -43,13 +77,6 @@ Page({
         }
     })
   },
-  onReady:function(){
-    // 页面渲染完成
-    
-  },
-  onShow:function(){
-    // 页面显示
-  },
   onHide:function(){
     // 页面隐藏
   },
@@ -59,7 +86,7 @@ Page({
   getParkInfo : function(carNumber, cb){
     // 获取停车信息的方法
     wx.request({
-      url:'http://localhost:8080/TingChe/servlet/Park',
+      url:'http://feigebbm.tk:8080/TingChe/servlet/Park',
       data:{
         carNumber:carNumber
       },
@@ -68,9 +95,43 @@ Page({
       }
     })
   },
-  pay : function(){
+  pay : function(e){
     // TODO 微信支付相关问题
-    console.log("wx.pay")
+    
+
+    //console.log(e)
+    wx.request({
+      url: 'http://feigebbm.tk:8080/TingChe/servlet/FirstPay',
+      data: {
+        carNumber:e.target.dataset.no
+      },
+      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {}, // 设置请求的 header
+      success: function(res){
+        // success
+        wx.redirectTo({
+          url: '../countdown/countdown',
+          success: function(res){
+            // success
+          },
+          fail: function(res) {
+            // fail
+          },
+          complete: function(res) {
+            // complete
+          }
+        })
+      },
+      fail: function(res) {
+        // fail
+      },
+      complete: function(res) {
+        // complete
+      }
+    })
+
+
+    
   }
 })
 

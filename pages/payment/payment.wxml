@@ -21,7 +21,7 @@
         </view>
 
         <!--缴费按钮-->
-        <view class="pay" bindtap="pay">确认缴费</view>
+        <view class="pay" bindtap="pay" data-no="{{carNumber}}">确认缴费</view>
     </block>
     
 
