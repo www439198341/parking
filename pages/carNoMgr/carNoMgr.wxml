@@ -1,32 +1,73 @@
 <!--pages/carNoMgr/carNoMgr.wxml-->
 <view class="item-page">
 
-    <view class="address-item" wx:for="{{addressList}}" bindtap="selUseAddress" >
+    <view class="address-item" wx:for="{{addressList}}" wx:key="{{addressList}}" bindtap="selUseAddress" >
         <view class="address-item-top" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" style="{{item.txtStyle}}"  data-index="{{index}}" >
+            <!--显示每个条目左边的序号数字-->
             <view class="item-page-left">
                 <text>{{index+1}}</text>
             </view>
-
+            <!--显示/输入修改每个条目中间部分的车牌号-->
             <view class="item-page-middle">
-                <text class="rr {{isEdit == true ? 'hide' : ''}}">{{item.Address}}</text>
-                <input class="rr {{isEdit == true ? '' : 'hide'}}" type="text" value="{{item.Address}}" bindblur="editConfirm" />
+                <text class="rr {{isEdit[index] ? 'hide' : ''}}">{{item.Address}}</text>
+                <input class="rr {{isEdit[index] ? '' : 'hide'}}" type="text" value="{{item.Address}}" bindblur="editConfirm" data-index="{{index}}" />
             </view>
 
-            <view class="item-page-right" bindtap="editAddress" data-index="{{index}}">
-                <image class="{{isEdit == true ? 'hide' : ''}}" src="../../image/editAddress.png"></image>
-                <image class="{{isEdit == true ? '' : 'hide'}}" src="../../image/check.png"></image>
+            <!--显示/修改每个条目右边的图片-->
+            <view class="item-page-right" bindtap="editAddress" data-index="{{index}}" >
+                <image class="{{isEdit[index] ? 'hide' : ''}}" src="../../image/editAddress.png"></image>
+                <image class="{{isEdit[index] ? '' : 'hide'}}" src="../../image/check.png" ></image>
             </view>
-        </view>
+        </view><!-- class=address-item-top -->
 
         <view bindtap="delItem" class="posit">
             <view class="editor" data-addressid="{{item.address.ID}}" catchtap="setDefaultAddress">设为默认</view>
             <view class="del" data-addressid="{{item.address.ID}}" bindtap="delItem" data-index="{{index}}" catchtap="delAddress">删除</view>
-        </view>
-    </view>
+        </view><!-- class=posit -->
+    </view><!-- class=address-item -->
 
+
+<view class="bottom {{whatsBottom==2 ? '':'hide'}}">
+<view class="bottom-left">
+<text>请输入车牌号：</text>
+
+</view>
+<input type="text" placeholder="abc" class="bottom-right" bindblur="inputcarno" />
+</view>
 
     <view class="add-address" bindtap="addAddress">
-        <text>添加新车辆</text>
+        
+        <text class="{{whatsBottom==1 ? '':'hide'}}">添加新车牌</text>
+        <text class="{{whatsBottom==2 ? '':'hide'}}">确定</text>
+        <text class="{{whatsBottom==3 ? '':'hide'}}">目前您只能添加3个车牌</text>
     </view>
 
 </view>
+
+
+<!--
+页面层级结构：
+view[item-page]
+    |
+    |--view[address-item]
+        |
+        |--view[address-item-top]
+            |
+            |--view[item-page-left]
+            |
+            |--view[item-page-middle]
+            |
+            |--view[item-page-right]
+        |
+        |--view[posit]
+            |
+            |--view[editor]
+            |
+            |--view[del]
+    |
+    |--view[add-address]
+
+
+
+
+-->

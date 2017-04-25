@@ -11,7 +11,7 @@ const initDeg = {
 Page({
 
   data: {
-    countTime:15,
+    countTime:0.1,
     remainTimeText: '',
     timerType: 'work',
     log: {},

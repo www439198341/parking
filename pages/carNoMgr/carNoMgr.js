@@ -2,8 +2,9 @@
 var svc = require("../../utils/services.js")
 Page({
   data:{
-    isEdit:false,
-    addressList:[{"Address":"苏A·W526Z"},{"Address":"京A·12345"},{"Address":"沪C·88888"}],
+    whatsBottom:null,//1--添加新车牌；2--确定；3--目前您只能添加3个车牌
+    isEdit:[],
+    addressList:[{"Address":"苏A·W526Z"},{"Address":"京A·12345"}],
     editIndex:0,
     delBtnWidth:150//删除按钮宽度单位（rpx）
   },
@@ -13,7 +14,23 @@ Page({
       that.setData({
         addressList : res
       })
-    });
+    })
+    // 页面加载时，为isEdit数组所有元素初始化赋值false
+    var newIsEdit = new Array(that.data.addressList.length);
+    for(var i=0;i<newIsEdit.length;i++){
+      newIsEdit[i]=false
+    }
+    that.setData({isEdit:this.data.isEdit.concat(newIsEdit)})
+    // 页面加载时，判断addressList数组长度，决定whatsBottom取值为1或3
+    var numWhatsBottom
+    if(that.data.addressList.length==3){
+      numWhatsBottom=3
+    }else{
+      numWhatsBottom=1
+    }
+    that.setData({whatsBottom:numWhatsBottom})
+    console.log(that.data.whatsBottom)
+    
   },
   onShow:function(){
     var that = this
@@ -60,24 +77,69 @@ Page({
       } 
     })
   },
-  //添加新地址
+  // 添加车牌号，输入框输入时，判断输入是否合法，并进行相应逻辑处理
+  inputcarno : function(e){
+    var that = this
+    var no = e.detail.value
+    if(e.detail.value.length==7){
+      //合法车牌，插入一个点，然后记录
+      var a = no.substr(0,2)
+      var b = no.substr(2,5)
+      no=a+'·'+b
+      this.data.addressList.push({"Address":no})
+      that.setData({addressList:this.data.addressList})
+    }else{
+      //非法车牌，提示错误
+      wx.showModal({
+        title: '提示',
+        content: '车牌号不符合要求，请检查后重新输入！',
+        showCancel:false,
+        success: function(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
+    // TODO 无论用户输入是否有效，确定后，都要清空输入框内容
+    
+  },
+  //添加新地址,// 输入完需要添加的车牌号后，点击最下面确定按钮时
   addAddress:function(e){
-    wx.navigateTo({
-      url: '/pages/addressadd/addressadd?action=add'
+    var that = this
+    if(that.data.whatsBottom == 1){
+      that.setData({whatsBottom:2})
+    }else if(that.data.whatsBottom == 2){
+      if(that.data.addressList.length ==3){
+        that.setData({whatsBottom:3})
+      }else{
+        that.setData({whatsBottom:1})
+      }
+    }
+  },
+ 
+  
+  
+  // 在修改地址时，绑定当输入框失去焦点时触发的函数，修改数组
+  editConfirm:function(e){
+    var that = this
+    this.data.addressList[e.target.dataset.index].Address=e.detail.value
+    that.setData({
+      addressList:this.data.addressList
     })
+    
   },
   //修改地址
   editAddress:function(e){
     var that = this
-    that.data.editIndex = e.currentTarget.dataset.index;
-    wx.setStorage({
-      key: 'editAddress',
-      data: that.data.addressList[that.data.editIndex]
+    this.data.isEdit[e.currentTarget.dataset.index]=!this.data.isEdit[e.currentTarget.dataset.index]
+    that.setData({
+      isEdit:this.data.isEdit
     })
+    //TODO 发起修改数据库的请求
 
-    wx.navigateTo({
-      url: '/pages/addressadd/addressadd?action=edit'
-    })
   },
   //选择本次使用的地址
   selUseAddress:function(e){
@@ -160,5 +222,4 @@ Page({
       });
     
   }
-
 })

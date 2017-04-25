@@ -69,6 +69,32 @@
     width: 70rpx;
     height: 70rpx;
 }
+.bottom{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    position: fixed;
+    bottom: 90rpx;
+    height: 90rpx;
+    width:100%;
+    margin-bottom:5rpx; 
+}
+.bottom-left{
+    display: flex;
+    flex-direction: column;
+    background-color: #eee;
+    margin:0 50rpx;
+    color: #d2d2d3;
+}
+
+
+
+.bottom-right{
+    border: 1px #d2d2d3 solid;
+    border-radius: 10rpx;
+    background-color: #fff;
+}
 
 .add-address{
     background: #4a86e8;
