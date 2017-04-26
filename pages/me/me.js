@@ -8,7 +8,7 @@ Page({
     motto3: '停车券',
     motto4: '帮助',
     userInfo: {},
-    carNumber:'苏A·W526Z'
+    carNumber:null
   },
   //事件处理函数
   bindViewTap: function() {
@@ -16,8 +16,8 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
-    console.log('onLoad')
+  onShow: function () {
+    
     var that = this
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){
@@ -25,6 +25,9 @@ Page({
       that.setData({
         userInfo:userInfo
       })
+    })
+    that.getDefaultCarNo(function(res){
+      that.setData({carNumber:res[0].Address})
     })
   },
   carNoMgr : function(){
@@ -80,6 +83,18 @@ Page({
       },
       complete: function(res) {
         // complete
+      }
+    })
+  },
+  // 查询默认车牌号
+  getDefaultCarNo : function(cb){
+    wx.request({
+      url: 'http://localhost:8080/TingChe/servlet/GetCarNo',
+      data: {
+        openid:app.globalData.openid
+      },
+      success: function(res){
+        return typeof cb == "function" && cb(res.data)
       }
     })
   }

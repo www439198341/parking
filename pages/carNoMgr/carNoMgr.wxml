@@ -21,8 +21,8 @@
         </view><!-- class=address-item-top -->
 
         <view bindtap="delItem" class="posit">
-            <view class="editor" data-addressid="{{item.address.ID}}" catchtap="setDefaultAddress">设为默认</view>
-            <view class="del" data-addressid="{{item.address.ID}}" bindtap="delItem" data-index="{{index}}" catchtap="delAddress">删除</view>
+            <view class="editor" data-index="{{index}}" catchtap="setDefaultAddress">设为默认</view>
+            <view class="del"  bindtap="delItem" data-index="{{index}}" catchtap="delAddress">删除</view>
         </view><!-- class=posit -->
     </view><!-- class=address-item -->
 
@@ -32,7 +32,7 @@
 <text>请输入车牌号：</text>
 
 </view>
-<input type="text" placeholder="abc" class="bottom-right" bindblur="inputcarno" />
+<input type="text" placeholder="如：京A12345" class="bottom-right" bindblur="inputcarno" placeholder-class="placeclass"/>
 </view>
 
     <view class="add-address" bindtap="addAddress">

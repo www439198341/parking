@@ -2,10 +2,12 @@
   "pages":[
     
     "pages/payment/payment",
-    "pages/countdown/countdown",
     "pages/me/me",
-    "pages/index/index",
     "pages/carNoMgr/carNoMgr",
+    "pages/countdown/countdown",
+    
+    "pages/index/index",
+    
     "pages/logs/logs",
     "pages/onsale/onsale",
     "pages/help/help"

@@ -108,9 +108,13 @@
     align-items: center;
 }
 
-.add-address text{
+.add-address {
     color: #fff;
     letter-spacing: 3px;
+}
+
+.placeclass{
+    color: #d2d2d3;
 }
 
 .inner {

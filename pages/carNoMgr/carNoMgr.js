@@ -1,27 +1,30 @@
 // pages/addresslist/addresslist.js
 var svc = require("../../utils/services.js")
+var app = getApp();
 Page({
   data:{
     whatsBottom:null,//1--添加新车牌；2--确定；3--目前您只能添加3个车牌
     isEdit:[],
-    addressList:[{"Address":"苏A·W526Z"},{"Address":"京A·12345"}],
+    addressList:null,
     editIndex:0,
     delBtnWidth:150//删除按钮宽度单位（rpx）
   },
   onLoad:function(options){
     var that = this
-    svc.getUserAddress(function (res) {
-      that.setData({
-        addressList : res
-      })
+    // TODO 查询后台数据库，获得列表
+    that.getCarNo(function(res){
+      that.setData({addressList:res})
     })
-    // 页面加载时，为isEdit数组所有元素初始化赋值false
+  },
+  onReady:function(){
+    var that = this
+    // 页面加载完成后，为isEdit数组所有元素初始化赋值false
     var newIsEdit = new Array(that.data.addressList.length);
     for(var i=0;i<newIsEdit.length;i++){
       newIsEdit[i]=false
     }
     that.setData({isEdit:this.data.isEdit.concat(newIsEdit)})
-    // 页面加载时，判断addressList数组长度，决定whatsBottom取值为1或3
+    // 页面加载完成后，判断addressList数组长度，决定whatsBottom取值为1或3
     var numWhatsBottom
     if(that.data.addressList.length==3){
       numWhatsBottom=3
@@ -29,53 +32,6 @@ Page({
       numWhatsBottom=1
     }
     that.setData({whatsBottom:numWhatsBottom})
-    console.log(that.data.whatsBottom)
-    
-  },
-  onShow:function(){
-    var that = this
-    var list = that.data.addressList;
-    wx.getStorage({
-      key: 'newAddress',
-      success: function(res) {
-       var item = {
-          Contact:res.data.Contact,
-          Mobile:res.data.Mobile,
-          Address:res.data.Address
-        }
-        list.push(item)
-
-        that.setData({
-          addressList:list
-        })
-
-        wx.removeStorage({
-          key: 'newAddress'
-        })
-      } 
-    })
-
-    wx.getStorage({
-      key: 'editAddress',
-      success: function(res) {
-        var data = res.data || []
-        var address = that.data.addressList[that.data.editIndex]
-        if (data.length != 0) {
-          address.Contact = data.Contact
-          address.Mobile = data.Mobile
-          address.Address = data.Address
-        }
-        var addressList = that.data.addressList;
-        addressList[that.data.editIndex] = address;
-        that.setData({
-          addressList:addressList
-        })
-
-        wx.removeStorage({
-          key: 'editAddress'
-        })
-      } 
-    })
   },
   // 添加车牌号，输入框输入时，判断输入是否合法，并进行相应逻辑处理
   inputcarno : function(e){
@@ -103,7 +59,7 @@ Page({
         }
       })
     }
-    // TODO 无论用户输入是否有效，确定后，都要清空输入框内容
+    
     
   },
   //添加新地址,// 输入完需要添加的车牌号后，点击最下面确定按钮时
@@ -112,6 +68,7 @@ Page({
     if(that.data.whatsBottom == 1){
       that.setData({whatsBottom:2})
     }else if(that.data.whatsBottom == 2){
+      
       if(that.data.addressList.length ==3){
         that.setData({whatsBottom:3})
       }else{
@@ -138,21 +95,27 @@ Page({
     that.setData({
       isEdit:this.data.isEdit
     })
-    //TODO 发起修改数据库的请求
 
+  },
+  // 设为默认车牌
+  setDefaultAddress: function(e){
+    this.touchE(e)
+    var defaultIndex = e.currentTarget.dataset.index
+    var defaultNo = this.data.addressList[defaultIndex]
+    // 数组中剔除该元素，然后把该元素设置在首位
+    this.data.addressList.splice(defaultIndex,1)
+    var newAddress = [defaultNo]
+    this.data.addressList = newAddress.concat(this.data.addressList)
+    this.setData({addressList:this.data.addressList})
+    
   },
   //选择本次使用的地址
   selUseAddress:function(e){
+    console.log("look at me")
+    console.log(e)
     var that = this
     var index = e.currentTarget.dataset.index;
-    wx.setStorage({
-      key: 'selAddress',
-      data: that.data.addressList[index]
-    })
-
-    wx.navigateBack({
-      url: '/pages/checkexternal/checkexternal'
-    })
+    
   },
   touchS:function(e){
     console.log("touchS");
@@ -217,9 +180,35 @@ Page({
         var index = e.target.dataset.index;
          var list = this.data.addressList;
          list.splice(index,1);
+
          this.setData({
-       addressList:list
+       addressList:list,
+       whatsBottom:1
       });
     
+  },
+  onUnload:function () {
+    //页面关闭
+    console.log('页面关闭，调用方法，向后台同步车牌号数据')
+    //TODO 页面关闭，调用方法，向后台同步车牌号数据
+    wx.request({
+      url: 'http://localhost:8080/TingChe/servlet/UpdateCarNo',
+      data: {
+        addressList:this.data.addressList,
+        openid:app.globalData.openid
+      }
+    })
+  },
+  // 查询车牌号信息的方法
+  getCarNo :　function(cb){
+    wx.request({
+      url: 'http://localhost:8080/TingChe/servlet/GetCarNo',
+      data: {
+        openid:app.globalData.openid
+      },
+      success: function(res){
+        return typeof cb == "function" && cb(res.data)
+      }
+    })
   }
 })
