@@ -1,11 +1,11 @@
 <!--pages/payment/payment.wxml-->
 <view class="container">
 
-    <block wx:if="{{isParking==1}}"> 
+    <block wx:if="{{parkStatus==1}}"> 
         <view>Loading...</view>
     </block>
 
-    <block wx:elif="{{isParking==2}}">
+    <block wx:elif="{{parkStatus==2}}">
         <view>没有查询到您的停车信息！</view>
         <view>下拉页面刷新！</view>
     </block>

@@ -9,7 +9,7 @@ Page({
      circleWidth:0,
      circleHeight:0,
      userInfo: {},
-     isParking:1
+     parkStatus:null
   },
   
   onLoad:function(options){
@@ -18,11 +18,14 @@ Page({
   },
   onReady:function(){
     // 页面渲染完成
+    var that = this
+    
     
   },
   onShow:function(){
     // 页面显示
     var that = this
+    
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function(userInfo){
       //更新数据
@@ -31,50 +34,31 @@ Page({
       })
       console.log(userInfo)
       console.log(app.globalData.openid)
-      wx.request({
-        url: 'http://localhost:8080/TingChe/servlet/Login',
-        data: {
-          openid:app.globalData.openid,
-          city:userInfo.city,
-          country:userInfo.country,
-          gender : userInfo.gender,
-          language :userInfo.language,
-          nickname : userInfo.nickname,
-          province : userInfo.province
-        },
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
-        success: function(res){
-          // success
-        },
-        fail: function(res) {
-          // fail
-        },
-        complete: function(res) {
-          // complete
+      that.login(userInfo,function(res){
+        // TODO 处理登录后的返回数据
+        console.log(res)
+        if(res==100){
+          wx.navigateTo({
+            url: '../carNoMgr/carNoMgr'
+          })
+        }else if(res==200){
+          that.setData({parkStatus:2})
+        }else{
+          that.setData({parkStatus:3})
         }
+        
       })
-
     })
 
-    
     this.getParkInfo(that.data.carNumber,function(data){
         //console.log(data)
 
-        if(data.isParking == false){
-          that.setData({
-            isParking:2
-          })
-        }else{
-          that.setData({
-            carNumber:data.carNumber,
-            parkTime:data.parkTime,
-            parkLocation:data.parkLocation,
-            fee:data.fee,
-            isParking:3
-          })
-          
-        }
+        that.setData({
+          carNumber:data.carNumber,
+          parkTime:data.parkTime,
+          parkLocation:data.parkLocation,
+          fee:data.fee
+        })
     })
   },
   onHide:function(){
@@ -105,33 +89,30 @@ Page({
       data: {
         carNumber:e.target.dataset.no
       },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
       success: function(res){
         // success
         wx.redirectTo({
           url: '../countdown/countdown',
-          success: function(res){
-            // success
-          },
-          fail: function(res) {
-            // fail
-          },
-          complete: function(res) {
-            // complete
-          }
         })
-      },
-      fail: function(res) {
-        // fail
-      },
-      complete: function(res) {
-        // complete
       }
     })
-
-
-    
+  },
+  login: function(userInfo,cb){
+    wx.request({
+        url: 'http://localhost:8080/TingChe/servlet/Login',
+        data: {
+          openid:app.globalData.openid,
+          city:userInfo.city,
+          country:userInfo.country,
+          gender : userInfo.gender,
+          language :userInfo.language,
+          nickname : userInfo.nickname,
+          province : userInfo.province
+        },
+        success: function(res){
+          return typeof cb == "function" && cb(res.data)
+        }
+      })
   }
 })
 

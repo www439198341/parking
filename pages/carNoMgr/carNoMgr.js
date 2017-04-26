@@ -189,7 +189,22 @@ Page({
   },
   onUnload:function () {
     //页面关闭
-    console.log('页面关闭，调用方法，向后台同步车牌号数据')
+    // 判断至少存在一个车牌号，否则不允许离开页面
+    if(this.data.addressList.length==0){
+      wx.showModal({
+        title: '提示',
+        content: '继续使用前，必须添加一个车牌号',
+        showCancel: false,
+        success: function(res) {
+          if (res.confirm) {
+             wx.navigateTo({
+              url: '../carNoMgr/carNoMgr'
+            })
+          } 
+        }
+      })
+     
+    }
     //TODO 页面关闭，调用方法，向后台同步车牌号数据
     wx.request({
       url: 'http://localhost:8080/TingChe/servlet/UpdateCarNo',

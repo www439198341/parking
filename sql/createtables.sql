@@ -11,7 +11,8 @@ parkin datetime,
 parkingnumber int(20),
 firstpay datetime,
 parkout datetime,
-secondpay datetime
+secondpay datetime,
+iscompleted bool
 );
 
 create table parkinginfo(
