@@ -205,7 +205,7 @@ Page({
       })
      
     }
-    //TODO 页面关闭，调用方法，向后台同步车牌号数据
+    //页面关闭，调用方法，向后台同步车牌号数据
     wx.request({
       url: 'http://localhost:8080/TingChe/servlet/UpdateCarNo',
       data: {
@@ -213,6 +213,8 @@ Page({
         openid:app.globalData.openid
       }
     })
+    //设置全局变量app.globalData.carNumber默认车牌号的值
+    app.globalData.carNumber=this.data.addressList[0].Address
   },
   // 查询车牌号信息的方法
   getCarNo :　function(cb){

@@ -2,64 +2,59 @@
 var app = getApp();
 Page({
   data:{
-     carNumber:'苏A·W526Z',
-     parkTime:null,
-     parkLocation:null,
-     fee:null  ,
-     circleWidth:0,
-     circleHeight:0,
-     userInfo: {},
-     parkStatus:null
+    openid:null,
+    carNumber:null,
+    parkTime:null,
+    parkLocation:null,
+    fee:null  ,
+    circleWidth:0,
+    circleHeight:0,
+    userInfo: {},
+    parkStatus:null,
+    loginStatus:null
   },
   
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
-    
+    this.setData({
+      userInfo:app.globalData.userInfo,
+      openid:app.globalData.openid
+    })
   },
   onReady:function(){
-    // 页面渲染完成
-    var that = this
-    
-    
+    // 页面渲染完成 
   },
   onShow:function(){
     // 页面显示
     var that = this
-    
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-      console.log(userInfo)
-      console.log(app.globalData.openid)
-      that.login(userInfo,function(res){
-        // TODO 处理登录后的返回数据
-        console.log(res)
-        if(res==100){
-          wx.navigateTo({
-            url: '../carNoMgr/carNoMgr'
-          })
-        }else if(res==200){
-          that.setData({parkStatus:2})
-        }else{
-          that.setData({parkStatus:3})
-        }
-        
-      })
-    })
-
-    this.getParkInfo(that.data.carNumber,function(data){
-        //console.log(data)
-
-        that.setData({
-          carNumber:data.carNumber,
-          parkTime:data.parkTime,
-          parkLocation:data.parkLocation,
-          fee:data.fee
+    app.login(app.globalData.userInfo,function(res){
+      // TODO 处理登录后的返回数据
+      console.log(res)
+      if(res=="100"){
+        wx.navigateTo({
+          url: '../carNoMgr/carNo/Mgr'
         })
+      }else if(res=="200"){
+        that.setData({parkStatus:2})
+      }else if(res=="300"){
+        // 用openid查询停车信息
+        that.getParkInfo(that.data.openid,function(data){
+            that.setData({
+              carNumber:data.carNumber,
+              parkTime:data.parkTime,
+              parkLocation:data.parkLocation,
+              fee:data.fee
+            })
+        })
+      }else if(res=="400"){
+        wx.navigateTo({
+          url: '../countdown/countdown'
+        })
+      }
     })
+    
+    
+    
   },
   onHide:function(){
     // 页面隐藏
@@ -67,12 +62,12 @@ Page({
   onUnload:function(){
     // 页面关闭
   },
-  getParkInfo : function(carNumber, cb){
+  getParkInfo : function(openid, cb){
     // 获取停车信息的方法
     wx.request({
-      url:'http://feigebbm.tk:8080/TingChe/servlet/Park',
+      url:'http://localhost:8080/TingChe/servlet/Park',
       data:{
-        carNumber:carNumber
+        openid:openid
       },
       success: function(res) {
         cb(res.data)
@@ -85,7 +80,7 @@ Page({
 
     //console.log(e)
     wx.request({
-      url: 'http://feigebbm.tk:8080/TingChe/servlet/FirstPay',
+      url: 'http://localhost:8080/TingChe/servlet/FirstPay',
       data: {
         carNumber:e.target.dataset.no
       },
@@ -96,23 +91,6 @@ Page({
         })
       }
     })
-  },
-  login: function(userInfo,cb){
-    wx.request({
-        url: 'http://localhost:8080/TingChe/servlet/Login',
-        data: {
-          openid:app.globalData.openid,
-          city:userInfo.city,
-          country:userInfo.country,
-          gender : userInfo.gender,
-          language :userInfo.language,
-          nickname : userInfo.nickname,
-          province : userInfo.province
-        },
-        success: function(res){
-          return typeof cb == "function" && cb(res.data)
-        }
-      })
   }
 })
 

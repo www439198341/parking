@@ -10,7 +10,33 @@ App({
     } else {
       svc.login()
     }
+
+    var that = this
+    this.getUserInfo(function(res){
+      that.globalData.userInfo=res
+      
+    })
   },
+  // 注册登录请求
+  login: function(userInfo,cb){
+    var that = this
+    wx.request({
+      url: 'http://localhost:8080/TingChe/servlet/Login',
+      data: {
+        openid:this.globalData.openid,
+        city:userInfo.city,
+        country:userInfo.country,
+        gender : userInfo.gender,
+        language :userInfo.language,
+        nickname : userInfo.nickName,
+        province : userInfo.province
+      },
+      success: function(res){
+        return typeof cb == "function" && cb(res.data)
+      }
+    })
+  },
+  // 获取用户信息请求
   getUserInfo:function(cb){
     var that = this
     if(this.globalData.userInfo){
@@ -55,6 +81,7 @@ App({
     carNumber:null,
     token: "",
     newAddress:{},
-    addressList:[]
+    addressList:[],
+    loginStatus:null
   }
 })
