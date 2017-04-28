@@ -10,12 +10,6 @@ Page({
     userInfo: {},
     carNumber:null
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
   onShow: function () {
     
     var that = this

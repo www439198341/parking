@@ -1,6 +1,6 @@
 <!--pages/me/me.wxml-->
 <view class="container">
-  <view  bindtap="bindViewTap" class="userinfo">
+  <view class="userinfo">
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
 
     <view class="nameAndNumber">

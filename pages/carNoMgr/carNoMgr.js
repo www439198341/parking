@@ -1,5 +1,5 @@
 // pages/addresslist/addresslist.js
-var svc = require("../../utils/services.js")
+// var svc = require("../../utils/services.js")
 var app = getApp();
 Page({
   data:{
@@ -36,7 +36,7 @@ Page({
   // 添加车牌号，输入框输入时，判断输入是否合法，并进行相应逻辑处理
   inputcarno : function(e){
     var that = this
-    var no = e.detail.value
+    var no = e.detail.value.toUpperCase()
     if(e.detail.value.length==7){
       //合法车牌，插入一个点，然后记录
       var a = no.substr(0,2)

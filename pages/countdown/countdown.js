@@ -11,7 +11,7 @@ const initDeg = {
 Page({
 
   data: {
-    countTime:'0.50',
+    countTime:'15.00',
     remainTimeText: '',
     timerType: 'work',
     log: {},
@@ -26,7 +26,8 @@ Page({
     // 如果用户是登陆时直接被跳转至该页面，则ops.from=login，此时应从缓存中加载
     if(ops.from=="pay"){
       // 设置倒计时时间为15min，并且将缓存中completed置为false
-      this.setData({countTime:'0.50'})
+      this.setData({countTime:'15.00'})
+      wx.setStorageSync('completed', false)
     }else if(ops.from=="login"){
 
       // 从缓存中取出completed的取值。这个值的真假，代表了倒计时是否结束，以及视图层应该显示的内容。
@@ -45,13 +46,13 @@ Page({
       // 计算触发onshow时，即当前剩余倒计时时间，返回时间格式
       var timestamp = new Date(endtime - (showTime - unloadTime))
 
-      console.log("look at me"+timestamp)
+      // console.log("look at me"+timestamp)
 
       // 把返回的时间格式剩余倒计时，转换为小数格式
       // 获取分钟部分
-      console.log(timestamp.getMinutes())
+      // console.log(timestamp.getMinutes())
       // 获取秒部分，并转换为2位小数
-      console.log((timestamp.getSeconds()/60).toFixed(2).substr(-3))
+      // console.log((timestamp.getSeconds()/60).toFixed(2).substr(-3))
       // 组合整数部分和小数部分
       var remainTimeFromStorage = timestamp.getMinutes()+(timestamp.getSeconds()/60).toFixed(2).substr(-3)
       this.setData({countTime:remainTimeFromStorage})
@@ -77,8 +78,7 @@ Page({
   },
 
   onUnload : function(){
-    console.log("onUnload")
-    
+
     try {
       wx.setStorageSync('unloadTime', new Date())
       wx.setStorageSync('remainTimeUnload', this.data.remainTimeText)

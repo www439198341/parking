@@ -1,5 +1,6 @@
 // pages/payment/payment.js
 var app = getApp();
+let timer
 Page({
   data:{
     openid:null,
@@ -10,51 +11,77 @@ Page({
     circleWidth:0,
     circleHeight:0,
     userInfo: {},
-    parkStatus:null,
-    loginStatus:null
+    parkStatus:1,
+    loginStatus:null,
+    timeout:false
   },
   
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
-    this.setData({
-      userInfo:app.globalData.userInfo,
-      openid:app.globalData.openid
-    })
+
   },
   onReady:function(){
     // 页面渲染完成 
+    var that = this
+    
   },
   onShow:function(){
     // 页面显示
+    console.log("onShow")
     var that = this
-    app.login(app.globalData.userInfo,function(res){
-      // 处理登录后的返回数据
-      //console.log(res)
-      if(res=="100"){
-        wx.navigateTo({
-          url: '../carNoMgr/carNoMgr'
-        })
-      }else if(res=="200"){
-        that.setData({parkStatus:2})
-      }else if(res=="300"){
-        // 用openid查询停车信息
-        that.getParkInfo(that.data.openid,function(data){
-            that.setData({
-              carNumber:data.carNumber,
-              parkTime:data.parkTime,
-              parkLocation:data.parkLocation,
-              fee:data.fee
-            })
-        })
-      }else if(res=="400"){
-        wx.navigateTo({
-          url: '../countdown/countdown?from=login'
+    //调用应用实例的方法获取全局数据
+    app.getUserInfo(function(userInfo){
+      //更新数据
+      that.setData({
+        userInfo:userInfo,
+        openid:app.globalData.openid
+      })
+
+      if(that.data.userInfo==null || that.data.openid==null){
+        console.log(that.data)
+        app.getUserInfo(function(){
+          //更新数据
+          that.setData({
+            userInfo:userInfo,
+            openid:app.globalData.openid
+          })
         })
       }
+      // 调用登录请求
+      app.login(that.data.userInfo, function(resp){
+        // 处理登录后的返回数据
+        console.log(resp)
+        if(resp=="100"){
+          wx.navigateTo({
+            url: '/pages/carNoMgr/carNoMgr'
+          })
+        }else if(resp=="200"){
+          that.setData({parkStatus:2})
+        }else if(resp=="300"){
+          // 用openid查询停车信息
+          
+          that.getParkInfo(that.data.openid,function(data){
+            that.setData({
+              parkStatus:3,
+              carNumber : data.carNumber,
+              parkTime : data.parkTime,
+              parkLocation : data.parkLocation,
+              fee : data.fee
+            })
+          })
+        }else if(resp=="400"){
+          wx.navigateTo({
+            url: '/pages/countdown/countdown?from=login'
+          })
+        }
+      })
+      
     })
     
-    
-    
+    // 设置页面1分钟后超时，需要下拉刷新
+    timer=setTimeout(function(){
+      that.setData({timeout:true})
+    },60000)
   },
   onHide:function(){
     // 页面隐藏
@@ -92,6 +119,16 @@ Page({
         })
       }
     })
+  },
+  // 监听下拉刷新
+  onPullDownRefresh: function(){
+    
+    wx.stopPullDownRefresh()
+    // console.log("触发了下拉刷新")
+    timer && clearInterval(timer);
+    this.setData({timeout:false})
+    this.onShow()
+  
   }
 })
 

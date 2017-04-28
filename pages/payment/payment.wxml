@@ -21,7 +21,8 @@
         </view>
 
         <!--缴费按钮-->
-        <view class="pay" bindtap="pay" data-no="{{carNumber}}">确认缴费</view>
+        <view class="{{timeout ? 'hide' : 'pay'}}" bindtap="pay" data-no="{{carNumber}}">确认缴费</view>
+        <view class="{{timeout ? '' : 'hide'}}" >页面已超时，请下拉刷新</view>
     </block>
     
 
