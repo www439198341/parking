@@ -1,4 +1,7 @@
-
+.container{
+  display: flex;
+  padding: 200rpx 0;
+}
 
 .timer_main {
   background-color: #48c23d;/*48c23d*/
