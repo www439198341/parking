@@ -14,7 +14,6 @@ App({
     var that = this
     this.getUserInfo(function(res){
       that.globalData.userInfo=res
-      
     })
   },
   // 注册登录请求
@@ -23,13 +22,7 @@ App({
     wx.request({
       url: 'http://localhost:8080/TingChe/servlet/Login',
       data: {
-        openid:this.globalData.openid,
-        city:userInfo.city,
-        country:userInfo.country,
-        gender : userInfo.gender,
-        language :userInfo.language,
-        nickname : userInfo.nickName,
-        province : userInfo.province
+        openid:this.globalData.openid
       },
       success: function(res){
         return typeof cb == "function" && cb(res.data)

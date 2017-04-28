@@ -28,11 +28,11 @@ Page({
     // 页面显示
     var that = this
     app.login(app.globalData.userInfo,function(res){
-      // TODO 处理登录后的返回数据
-      console.log(res)
+      // 处理登录后的返回数据
+      //console.log(res)
       if(res=="100"){
         wx.navigateTo({
-          url: '../carNoMgr/carNo/Mgr'
+          url: '../carNoMgr/carNoMgr'
         })
       }else if(res=="200"){
         that.setData({parkStatus:2})
@@ -48,7 +48,7 @@ Page({
         })
       }else if(res=="400"){
         wx.navigateTo({
-          url: '../countdown/countdown'
+          url: '../countdown/countdown?from=login'
         })
       }
     })
@@ -86,8 +86,9 @@ Page({
       },
       success: function(res){
         // success
-        wx.redirectTo({
-          url: '../countdown/countdown',
+        // TODO 调试用。后期需要修改成redirectTo
+        wx.navigateTo({
+          url: '../countdown/countdown?from=pay',
         })
       }
     })

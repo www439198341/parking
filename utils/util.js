@@ -7,7 +7,8 @@ function formatTime(time, format) {
 }
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  formatTime2:formatTime2
 }
 
 
