@@ -10,7 +10,7 @@ App({
   login: function(userInfo,cb){
     var that = this
     wx.request({
-      url: 'http://localhost:8080/TingChe/servlet/Login',
+      url: that.globalData.globalURL+'Login',
       data: {
         openid:this.globalData.openid,
         city:userInfo.city,
@@ -73,6 +73,8 @@ App({
     token: "",
     newAddress:{},
     addressList:[],
-    loginStatus:null
+    loginStatus:null,
+    globalURL:"https://www.feigebbm.tk/TingChe/"
+    // globalURL:"http://localhost:8080/TingChe/servlet/"
   }
 })

@@ -10,7 +10,7 @@
 
   <!-- 显示屏幕下方文字 -->
   <view class="info_list">
-    <block wx:for="{{userListInfo}}">
+    <block wx:for="{{userListInfo}}" wx:key="{{index}}">
       <view class="weui_cell" bindtap="navi{{index}}">
         <view class="weui_cell_hd">
           <image src="{{item.icon}}"></image>

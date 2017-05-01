@@ -1,7 +1,7 @@
 <!--pages/carNoMgr/carNoMgr.wxml-->
 <view class="item-page">
 
-    <view class="address-item" wx:for="{{addressList}}" wx:key="{{addressList}}" bindtap="selUseAddress" >
+    <view class="address-item" wx:for="{{addressList}}" wx:key="{{addressList}}" >
         <view class="address-item-top" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" style="{{item.txtStyle}}"  data-index="{{index}}" >
             <!--显示每个条目左边的序号数字-->
             <view class="item-page-left">
@@ -10,7 +10,7 @@
             <!--显示/输入修改每个条目中间部分的车牌号-->
             <view class="item-page-middle">
                 <text class="rr {{isEdit[index] ? 'hide' : ''}}">{{item.Address}}</text>
-                <input class="rr {{isEdit[index] ? '' : 'hide'}}" type="text" value="{{item.Address}}" bindblur="editConfirm" data-index="{{index}}" />
+                <input class="rr {{isEdit[index] ? '' : 'hide'}}" type="text" value="{{item.Address}}" bindblur="editConfirm" data-index="{{index}}"  />
             </view>
 
             <!--显示/修改每个条目右边的图片-->

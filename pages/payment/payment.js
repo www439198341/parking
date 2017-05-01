@@ -92,7 +92,7 @@ Page({
   getParkInfo : function(openid, cb){
     // 获取停车信息的方法
     wx.request({
-      url:'http://localhost:8080/TingChe/servlet/Park',
+      url:app.globalData.globalURL+'Park',
       data:{
         openid:openid
       },
@@ -107,14 +107,14 @@ Page({
 
     //console.log(e)
     wx.request({
-      url: 'http://localhost:8080/TingChe/servlet/FirstPay',
+      url: app.globalData.globalURL+'FirstPay',
       data: {
         carNumber:e.target.dataset.no
       },
       success: function(res){
         // success
         // TODO 调试用。后期需要修改成redirectTo
-        wx.navigateTo({
+        wx.redirectTo({
           url: '../countdown/countdown?from=pay',
         })
       }

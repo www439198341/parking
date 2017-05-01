@@ -1,21 +1,16 @@
 /* pages/me/me.wxss */
 .container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-color: #F2f2f2;
 }
 
 .userinfo {
   display: flex;
   flex-direction: row;
+  padding: 100rpx 0;
   align-items: center;
+  /*background: #f9f027;*/
+  margin-bottom: 200rpx;
 }
-
-.nameAndNumber{
-  display:flex;
-  flex-direction: column;
-}
-
 .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
@@ -25,19 +20,7 @@
 
 .userinfo-nickname {
   color: #aaa;
-  font-family: 微软雅黑;
-  font-size: 50rpx;
-}
-
-.usermotto {
-  margin-top: 100rpx;
-}
-
-.userAction{
-  margin-top: 300rpx;
-}
-
-.me-list{
+  font-size: 60rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,5 +29,55 @@
   padding: 15rpx 25rpx;
   border-radius: 5%;
   border:2rpx solid #aaa;
+}
 
+.weui_cell{
+  
+    position: relative;
+    display: flex;
+    padding: 15px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: 1px solid #dadada;
+}
+.weui_cell_hd{
+  display: inline-block;
+  width: 20px;
+  margin-right: 5px;
+}
+.weui_cell_hd image{
+  width: 100%;
+  height: 20px;
+  vertical-align: -2px;
+}
+.weui_cell_bd{
+  display: inline-block;
+}
+.weui_cell_bd_p{
+  font-size: 14px;
+  color: #939393;
+}
+.badge{
+  position: absolute;
+  top: 18px;
+  right: 40px;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  background: #ff0000;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 8px;
+}
+.with_arrow{
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  width: 15px;
+  height: 15px;
+  background-image: url(../../image/icon-arrowdown.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
